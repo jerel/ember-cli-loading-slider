@@ -1,6 +1,6 @@
 # Loading-slider
 
-This README outlines the usage of this Ember add-on.
+A loading indicator component for EmberJS that animates across the top of the viewport.
 
 [Live Demo](http://loading-slider.jerel.co/)
 
