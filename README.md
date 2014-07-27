@@ -61,7 +61,7 @@ You may also show or hide the animation at any time from any route or controller
 
 ## Authors
 
-* [http://twitter.com/jerelunruh/](Jerel Unruh)
+* [Jerel Unruh](http://twitter.com/jerelunruh/)
 
 ## Legal
 
