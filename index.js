@@ -23,7 +23,7 @@ EmberCLILoadingSlider.prototype.treeFor = function treeFor(name) {
   } else {
       treePath = path.join(treePath, name);
   }
-  console.log(treePath);
+
   if (fs.existsSync(treePath)) {
     return unwatchedTree(treePath);
   }
