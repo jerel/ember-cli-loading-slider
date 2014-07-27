@@ -4,6 +4,8 @@ A loading indicator component for EmberJS that animates across the top of the vi
 
 [Live Demo](http://loading-slider.jerel.co/)
 
+[![Build Status](https://travis-ci.org/ngenworks/ember-cli-loading-slider.svg?branch=master)](https://travis-ci.org/ngenworks/ember-cli-loading-slider)
+
 ## Installation
 
 `npm install ember-cli-loading-slider --save-dev`
