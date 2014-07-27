@@ -1,0 +1,15 @@
+
+{{loading-slider isLoading=loading duration=250 color=color}}
+
+<h2 id='title'>Welcome to Ember.js</h2>
+
+<ul>
+  <li>{{link-to 'Home' 'index'}}</li>
+  <li>{{link-to 'Two Second Transition' 'two'}}</li>
+  <li>{{link-to '75ms Transition' '75'}}</li>
+  <li>{{link-to 'Orange 500ms Transition' 'orange'}}</li>
+</ul>
+
+<div class="boxed">
+{{outlet}}
+</div>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Ember Add-on Loading Slider</title>
+    <meta name="description" content="Show a slick animation when transitioning between routes or when making API requests.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    {{BASE_TAG}}
+
+    <link rel="stylesheet" href="assets/vendor.css">
+    <link rel="stylesheet" href="assets/dummy.css">
+    <style>
+      .boxed {
+        max-width: 500px;
+      }
+      code {
+        background-color: #d8d8d8;
+      }
+    </style>
+  </head>
+  <body>
+    <script>
+      window.DummyENV = {{ENV}};
+      window.EmberENV = window.DummyENV.EmberENV;
+    </script>
+    <script src="assets/vendor.js"></script>
+    <script src="assets/dummy.js"></script>
+    <script>
+      window.Dummy = require('dummy/app')['default'].create(DummyENV.APP);
+    </script>
+  </body>
+</html>
