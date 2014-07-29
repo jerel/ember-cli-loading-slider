@@ -18,14 +18,18 @@ function unwatchedTree(dir) {
 EmberCLILoadingSlider.prototype.treeFor = function treeFor(name) {
   var treePath = path.relative(process.cwd(), __dirname);
 
-  if (name === 'styles') {
+  if (name === 'styles' || name === 'templates') {
       treePath = path.join(treePath, 'app', name);
   } else {
       treePath = path.join(treePath, name);
   }
 
   if (fs.existsSync(treePath)) {
-    return unwatchedTree(treePath);
+    if (process.env.EMBER_ADDON_ENV === 'development') {
+      return treePath;
+    } else {
+      return unwatchedTree(treePath);
+    }
   }
 };
 
