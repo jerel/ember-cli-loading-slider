@@ -10,9 +10,6 @@
     "url": "https://github.com/ngenworks/ember-cli-loading-slider.git"
   },
   "ember-addon": {
-    "paths": [
-      "."
-      ]
   },
   "keywords": [
     "ember-addon",
