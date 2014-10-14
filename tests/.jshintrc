@@ -1,6 +1,5 @@
 {
   "predef": [
-    "DummyENV",
     "document",
     "window",
     "location",

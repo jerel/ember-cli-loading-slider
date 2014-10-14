@@ -16,20 +16,14 @@ Add the component to your application template:
 
     {{loading-slider isLoading=loading duration=250}}
 
-Create an application controller and add the following actions to your application route:
+Create an application controller and add the `loading-slider` 
+[mixin](https://github.com/ngenworks/ember-cli-loading-slider/blob/master/app/mixins/loading-slider.js) 
+to the application route:
 
-    actions: {
-      loading: function() {
-        var controller = this.controllerFor('application');
-        controller.set('loading', true);
-        this.router.one('didTransition', function() {
-          controller.set('loading', false);
-        });
-      },
-      finished: function() {
-        this.controllerFor('application').set('loading', false);
-      }
-    }
+    import Ember from 'ember';
+    import LoadingSliderMixin from '../mixins/loading-slider';
+
+    export default Ember.Route.extend(LoadingSliderMixin, { });
 
 The animation will now show when the user navigates between routes that
 return a promise (such as `this.store.find()`).

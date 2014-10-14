@@ -1,18 +1,8 @@
 import Ember from 'ember';
+import LoadingSliderMixin from '../mixins/loading-slider';
 
-export default Ember.Route.extend({
+export default Ember.Route.extend(LoadingSliderMixin, {
   actions: {
-    loading: function() {
-      var controller = this.controllerFor('application');
-      controller.set('loading', true);
-      this.router.one('didTransition', function() {
-        controller.set('loading', false);
-      });
-    },
-    finished: function() {
-      this.controllerFor('application').set('loading', false);
-    },
-
     // for testing. Controllers should use this.send('loading') instead.
     showAnimation: function() {
       this.send('loading');
