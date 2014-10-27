@@ -8,8 +8,6 @@
     "type": "git",
     "url": "https://github.com/ngenworks/ember-cli-loading-slider.git"
   },
-  "ember-addon": {
-  },
   "keywords": [
     "ember-addon",
     "loading"
