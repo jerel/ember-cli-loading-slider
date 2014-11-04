@@ -1,6 +1,6 @@
 {
   "name": "ember-cli-loading-slider",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "scripts": {
     "test": "ember test"
   },
