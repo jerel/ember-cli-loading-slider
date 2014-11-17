@@ -4,7 +4,7 @@ A loading indicator component for EmberJS that animates across the top of the vi
 
 [Live Demo](http://loading-slider.jerel.co/)
 
-[![Build Status](https://travis-ci.org/ngenworks/ember-cli-loading-slider.svg?branch=master)](https://travis-ci.org/ngenworks/ember-cli-loading-slider)
+[![Build Status](https://travis-ci.org/jerel/ember-cli-loading-slider.svg?branch=master)](https://travis-ci.org/jerel/ember-cli-loading-slider)
 
 ## Installation
 
@@ -17,7 +17,7 @@ Add the component to your application template:
     {{loading-slider isLoading=loading duration=250}}
 
 Create an application controller and add the `loading-slider` 
-[mixin](https://github.com/ngenworks/ember-cli-loading-slider/blob/master/app/mixins/loading-slider.js) 
+[mixin](https://github.com/jerel/ember-cli-loading-slider/blob/master/app/mixins/loading-slider.js) 
 to the application route:
 
     import Ember from 'ember';
@@ -61,6 +61,7 @@ You may also show or hide the animation at any time from any route or controller
 
 ## Legal
 
-Copyright (c) 2014 nGen Works Company and contributors
+Copyright (c) 2014 Jerel Unruh
 
 [Licensed under the MIT license](http://www.opensource.org/licenses/mit-license.php)
+
