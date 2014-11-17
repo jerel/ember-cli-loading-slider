@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports = {
   name: 'ember-cli-loading-slider',
   included: function(app) {
