@@ -3,16 +3,14 @@ import Ember from 'ember';
 export default Ember.Component.extend({
   tagName: 'div',
   classNames: ['loading-slider'],
-  stripeColor: function() {
-    var color = this.get('color');
-    if ( ! color) {
-      return this.$('span').removeAttr('style');
-    }
-    this.$('span').css('background-color', color);
-  }.observes('color'),
+  classNameBindings: 'expanding',
   manage: function() {
     if (this.get('isLoading')) {
-      this.animate.call(this);
+      if (this.get('expanding')) {
+        this.expandingAnimate.call(this);
+      } else {
+        this.animate.call(this);
+      }
     } else {
       this.set('isLoaded', true);
     }
@@ -21,11 +19,18 @@ export default Ember.Component.extend({
     this.set('isLoaded', false);
     var self = this,
         elapsedTime = 0,
-        inner = this.$().find('span'),
+        inner = $('<span>'),
+        outer = this.$(),
         duration = this.getWithDefault('duration', 300),
         innerWidth = 0,
         outerWidth = this.$().width(),
-        stepWidth = Math.round(outerWidth / 100);
+        stepWidth = Math.round(outerWidth / 50),
+        color = this.get('color');
+
+    outer.append(inner);
+    if (color) {
+      inner.css('background-color', color);
+    }
 
     var interval = window.setInterval(function() {
       elapsedTime = elapsedTime + 10;
@@ -42,7 +47,7 @@ export default Ember.Component.extend({
 
       if (innerWidth > outerWidth) {
         Ember.run.later(function() {
-          inner.width(0);
+          outer.empty();
           window.clearInterval(interval);
         }, 50);
       }
@@ -56,6 +61,52 @@ export default Ember.Component.extend({
         // accelerate to completion
         stepWidth = stepWidth + stepWidth;
       }
+    }, 10);
+  },
+  expandingAnimate: function() {
+    var self = this,
+        outer = this.$(),
+        speed = this.getWithDefault('speed', 1000),
+        colorQueue = this.get('color');
+
+    if ('object' === typeof colorQueue) {
+      var speedInterval = window.setInterval(function() {
+        var color = colorQueue.shift();
+        colorQueue.push(color);
+        self.expandItem.call(self, color);
+        if ( ! self.get('isLoading')) {
+          window.clearInterval(speedInterval);
+          outer.empty();
+        }
+      }, speed);
+    } else {
+      this.expandItem.call(this, colorQueue, true);
+    }
+  },
+  expandItem: function(color, cleanUp) {
+    var self = this,
+        inner = $('<span>').css({
+          'background-color': color,
+        }),
+        outer = this.$(),
+        innerWidth = 0,
+        outerWidth = outer.width(),
+        stepWidth = Math.round(outerWidth / 50);
+
+    outer.append(inner);
+
+    var interval = window.setInterval(function() {
+      var step = (innerWidth = innerWidth + stepWidth);
+      if (innerWidth > outerWidth) {
+        window.clearInterval(interval);
+        if (cleanUp) {
+          outer.empty();
+        }
+      }
+      inner.css({
+        'margin-left': '-' + step / 2 + 'px',
+        'width': step,
+      });
     }, 10);
   },
   didInsertElement: function() {

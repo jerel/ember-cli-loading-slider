@@ -1,5 +1,5 @@
 
-{{loading-slider isLoading=loading duration=250 color=color}}
+{{loading-slider isLoading=loading duration=250 speed=speed expanding=expanding color=color}}
 
 <h2 id='title'>Welcome to Ember.js</h2>
 
@@ -9,6 +9,12 @@
   <li>{{link-to '75ms Transition' '75'}}</li>
   <li>{{link-to 'Orange 500ms Transition' 'orange'}}</li>
 </ul>
+
+<p>
+  <button {{action 'showAnimation'}}>Show for 1 second</button>
+  <button {{action 'showExpandingAnimation'}}>Show an expanding animation</button>
+  <button {{action 'showMultiExpandingAnimation'}}>Show a fancy expanding animation</button>
+</p>
 
 <div class="boxed">
   {{outlet}}

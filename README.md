@@ -16,6 +16,10 @@ Add the component to your application template:
 
     {{loading-slider isLoading=loading duration=250}}
 
+Alternatively you may try the more complex mode:
+
+    {{loading-slider isLoading=loading expanding="true" color=hexColorsArray}}
+
 Create an application controller and add the `loading-slider` 
 [mixin](https://github.com/jerel/ember-cli-loading-slider/blob/master/app/mixins/loading-slider.js) 
 to the application route:
@@ -49,11 +53,19 @@ You may also show or hide the animation at any time from any route or controller
  * An approximate duration of the event in milliseconds. Defaults to `300`.
    Once 75% of this specified duration passes (or if the animation reaches 66%
    of the viewport width the animation slows until either isLoaded changes to
-   false or it reaches 100% of the viewport width.
+   false or it reaches 100% of the viewport width. This is only valid for the
+   simple stripe animation.
+* speed
+ * Set the speed of the expanding style animation. Defaults to `1000`. Only applies
+   when `expanding` is true.
+* expanding
+ * Set this to `true` to change the style of animation from a simple stripe
+   to a more complex animation (see the demo).
 * color
  * A css color to use for the animation stripe. Defaults to `red`. Can also be
    set with your application's css by setting the background-color of
-   .loading-slider > span.
+   .loading-slider > span. If `expanding` is set to `true` then `color` is required
+   and must be an array of colors.
 
 ## Authors
 

@@ -2,7 +2,10 @@ import Ember from 'ember';
 
 export default Ember.Route.extend({
   beforeModel: function() {
-    this.controllerFor('application').set('color', false);
+    this.controllerFor('application').setProperties({
+      color: false,
+      expanding: false,
+    });
   },
   model: function() {
     return new Ember.RSVP.Promise(function(resolve) {

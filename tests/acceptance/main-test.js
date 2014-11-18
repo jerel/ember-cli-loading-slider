@@ -26,14 +26,35 @@ test('testing animation', function() {
   visit('/');
 
   // use the jQuery click rather than the promise observing click
-  find('button').click();
+  find('button:first').click();
 
   Ember.run.later(function() {
-    equal(find('.loading-slider span').width() > 0, true, 'The slider has animated');
+    equal(find('.loading-slider span:last').width() > 0, true, 'The slider has animated');
   }, 500);
 
   Ember.run.later(function() {
-    equal(find('.loading-slider span').width() === 0, true, 'The slider has reset');
+    equal(find('.loading-slider span').length === 0, true, 'The slider has reset');
   }, 1500);
 
 });
+
+test('testing multi-color centered animation', function() {
+  visit('/');
+
+  // use the jQuery click rather than the promise observing click
+  find('button:nth-of-type(3)').click();
+
+  Ember.run.later(function() {
+    equal(find('.loading-slider span:last').width() > 0, true, 'The slider has animated');
+  }, 1000);
+
+  Ember.run.later(function() {
+    equal(find('.loading-slider span').length > 2, true, 'There are multiple sliders');
+  }, 1500);
+
+  Ember.run.later(function() {
+    equal(find('.loading-slider span').length === 0, true, 'The slider has reset');
+  }, 5500);
+
+});
+
