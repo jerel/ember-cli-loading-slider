@@ -4,7 +4,7 @@ export default Ember.Component.extend({
   tagName: 'div',
   classNames: ['loading-slider'],
   classNameBindings: 'expanding',
-  manage: function() {
+  manage: function () {
     if (this.get('isLoading')) {
       if (this.get('expanding')) {
         this.expandingAnimate.call(this);
@@ -15,24 +15,24 @@ export default Ember.Component.extend({
       this.set('isLoaded', true);
     }
   }.observes('isLoading'),
-  animate: function() {
+  animate: function () {
     this.set('isLoaded', false);
     var self = this,
-        elapsedTime = 0,
-        inner = $('<span>'),
-        outer = this.$(),
-        duration = this.getWithDefault('duration', 300),
-        innerWidth = 0,
-        outerWidth = this.$().width(),
-        stepWidth = Math.round(outerWidth / 50),
-        color = this.get('color');
+      elapsedTime = 0,
+      inner = $('<span>'),
+      outer = this.$(),
+      duration = this.getWithDefault('duration', 300),
+      innerWidth = 0,
+      outerWidth = this.$().width(),
+      stepWidth = Math.round(outerWidth / 50),
+      color = this.get('color');
 
     outer.append(inner);
     if (color) {
       inner.css('background-color', color);
     }
 
-    var interval = window.setInterval(function() {
+    var interval = window.setInterval(function () {
       elapsedTime = elapsedTime + 10;
       inner.width(innerWidth = innerWidth + stepWidth);
 
@@ -46,7 +46,7 @@ export default Ember.Component.extend({
       }
 
       if (innerWidth > outerWidth) {
-        Ember.run.later(function() {
+        Ember.run.later(function () {
           outer.empty();
           window.clearInterval(interval);
         }, 50);
@@ -63,18 +63,18 @@ export default Ember.Component.extend({
       }
     }, 10);
   },
-  expandingAnimate: function() {
+  expandingAnimate: function () {
     var self = this,
-        outer = this.$(),
-        speed = this.getWithDefault('speed', 1000),
-        colorQueue = this.get('color');
+      outer = this.$(),
+      speed = this.getWithDefault('speed', 1000),
+      colorQueue = this.get('color');
 
     if ('object' === typeof colorQueue) {
-      var speedInterval = window.setInterval(function() {
+      var speedInterval = window.setInterval(function () {
         var color = colorQueue.shift();
         colorQueue.push(color);
         self.expandItem.call(self, color);
-        if ( ! self.get('isLoading')) {
+        if (!self.get('isLoading')) {
           window.clearInterval(speedInterval);
           outer.empty();
         }
@@ -83,19 +83,22 @@ export default Ember.Component.extend({
       this.expandItem.call(this, colorQueue, true);
     }
   },
-  expandItem: function(color, cleanUp) {
-    var self = this,
-        inner = $('<span>').css({
-          'background-color': color,
-        }),
-        outer = this.$(),
-        innerWidth = 0,
-        outerWidth = outer.width(),
-        stepWidth = Math.round(outerWidth / 50);
+  expandItem: function (color, cleanUp) {
+    var outer = this.$();
+
+    if (!outer)
+      return;
+
+    var inner = $('<span>').css({
+        'background-color': color
+      }),
+      innerWidth = 0,
+      outerWidth = outer.width(),
+      stepWidth = Math.round(outerWidth / 50);
 
     outer.append(inner);
 
-    var interval = window.setInterval(function() {
+    var interval = window.setInterval(function () {
       var step = (innerWidth = innerWidth + stepWidth);
       if (innerWidth > outerWidth) {
         window.clearInterval(interval);
@@ -105,11 +108,11 @@ export default Ember.Component.extend({
       }
       inner.css({
         'margin-left': '-' + step / 2 + 'px',
-        'width': step,
+        'width': step
       });
     }, 10);
   },
-  didInsertElement: function() {
+  didInsertElement: function () {
     this.$().html('<span>');
 
     var color = this.get('color');
