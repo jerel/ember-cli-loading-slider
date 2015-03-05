@@ -19,7 +19,7 @@ Add the component to your application template:
 Alternatively you may try the more complex mode. In this mode an array of colors
 is required `hexColorsArray: ['#000', '#fff']`:
 
-    {{loading-slider isLoading=loading expanding="true" color=hexColorsArray}}
+    {{loading-slider isLoading=loading expanding=true color=hexColorsArray}}
 
 Create an application controller and add the `loading-slider` 
 [mixin](https://github.com/jerel/ember-cli-loading-slider/blob/master/app/mixins/loading-slider.js) 
