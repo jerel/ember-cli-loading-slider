@@ -21,9 +21,8 @@ is required `hexColorsArray: ['#000', '#fff']`:
 
     {{loading-slider isLoading=loading expanding=true color=hexColorsArray}}
 
-Create an application controller and add the `loading-slider` 
-[mixin](https://github.com/jerel/ember-cli-loading-slider/blob/master/app/mixins/loading-slider.js) 
-to the application route:
+Create application route (if not present) and extend application route with `loading-slider` 
+[mixin](https://github.com/jerel/ember-cli-loading-slider/blob/master/app/mixins/loading-slider.js):
 
     import Ember from 'ember';
     import LoadingSliderMixin from '../mixins/loading-slider';
