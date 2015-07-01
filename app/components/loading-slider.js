@@ -70,15 +70,16 @@ export default Ember.Component.extend({
         colorQueue = this.get('color');
 
     if ('object' === typeof colorQueue) {
-      var speedInterval = window.setInterval(function() {
+      (function updateFn() {
         var color = colorQueue.shift();
         colorQueue.push(color);
         self.expandItem.call(self, color);
         if ( ! self.get('isLoading')) {
-          window.clearInterval(speedInterval);
           outer.empty();
+        } else {
+          window.setTimeout(updateFn, speed);
         }
-      }, speed);
+      })();
     } else {
       this.expandItem.call(this, colorQueue, true);
     }
