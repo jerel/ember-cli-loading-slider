@@ -18,14 +18,14 @@ export default Ember.Component.extend({
   animate: function() {
     this.set('isLoaded', false);
     var self = this,
-        elapsedTime = 0,
-        inner = $('<span>'),
-        outer = this.$(),
-        duration = this.getWithDefault('duration', 300),
-        innerWidth = 0,
-        outerWidth = this.$().width(),
-        stepWidth = Math.round(outerWidth / 50),
-        color = this.get('color');
+      elapsedTime = 0,
+      inner = $('<span>'),
+      outer = this.$(),
+      duration = this.getWithDefault('duration', 300),
+      innerWidth = 0,
+      outerWidth = this.$().width(),
+      stepWidth = Math.round(outerWidth / 50),
+      color = this.get('color');
 
     outer.append(inner);
     if (color) {
@@ -65,9 +65,9 @@ export default Ember.Component.extend({
   },
   expandingAnimate: function() {
     var self = this,
-        outer = this.$(),
-        speed = this.getWithDefault('speed', 1000),
-        colorQueue = this.get('color');
+      outer = this.$(),
+      speed = this.getWithDefault('speed', 1000),
+      colorQueue = this.get('color');
 
     if ('object' === typeof colorQueue) {
       (function updateFn() {
@@ -85,14 +85,19 @@ export default Ember.Component.extend({
     }
   },
   expandItem: function(color, cleanUp) {
+    var outer = this.$();
+
+    if (!outer)
+      return;
+
     var self = this,
-        inner = $('<span>').css({
-          'background-color': color,
-        }),
-        outer = this.$(),
-        innerWidth = 0,
-        outerWidth = outer.width(),
-        stepWidth = Math.round(outerWidth / 50);
+      inner = $('<span>').css({
+        'background-color': color,
+      }),
+      outer = this.$(),
+      innerWidth = 0,
+      outerWidth = outer.width(),
+      stepWidth = Math.round(outerWidth / 50);
 
     outer.append(inner);
 
