@@ -17,18 +17,24 @@
   "author": "Jerel Unruh",
   "license": "MIT",
   "devDependencies": {
-    "body-parser": "^1.2.0",
-    "broccoli-asset-rev": "0.3.1",
-    "broccoli-ember-hbs-template-compiler": "^1.6.1",
-    "ember-cli": "0.1.2",
-    "ember-cli-content-security-policy": "0.3.0",
-    "ember-export-application-global": "^1.0.0",
-    "ember-cli-ic-ajax": "0.1.1",
-    "ember-cli-inject-live-reload": "^1.3.0",
-    "ember-cli-qunit": "0.1.0",
-    "ember-data": "1.0.0-beta.10",
-    "express": "^4.8.5",
-    "glob": "^4.0.5"
+    "broccoli-asset-rev": "^2.2.0",
+    "ember-cli": "1.13.12",
+    "ember-cli-app-version": "^1.0.0",
+    "ember-cli-content-security-policy": "0.4.0",
+    "ember-cli-dependency-checker": "^1.1.0",
+    "ember-cli-htmlbars": "^1.0.1",
+    "ember-cli-htmlbars-inline-precompile": "^0.3.1",
+    "ember-cli-ic-ajax": "0.2.4",
+    "ember-cli-inject-live-reload": "^1.3.1",
+    "ember-cli-qunit": "^1.0.4",
+    "ember-cli-release": "0.2.8",
+    "ember-cli-sri": "^1.1.0",
+    "ember-cli-uglify": "^1.2.0",
+    "ember-data": "1.13.15",
+    "ember-disable-proxy-controllers": "^1.0.1",
+    "ember-export-application-global": "^1.0.4",
+    "ember-disable-prototype-extensions": "^1.0.0",
+    "ember-try": "~0.0.8"
   },
   "keywords": [
     "ember-addon",
@@ -36,6 +42,9 @@
     "animation",
     "progress"
   ],
+  "dependencies": {
+    "ember-cli-babel": "^5.1.5"
+  },
   "ember-addon": {
     "configPath": "tests/dummy/config"
   }

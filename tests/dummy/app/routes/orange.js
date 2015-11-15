@@ -4,7 +4,7 @@ export default Ember.Route.extend({
   beforeModel: function() {
     this.controllerFor('application').setProperties({
       color: 'orange',
-      expanding: false,
+      expanding: false
     });
   },
   model: function() {
