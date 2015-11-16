@@ -5,6 +5,6 @@ module.exports = {
   included: function(app) {
     this._super.included(app);
 
-    app.import('components/loading-slider.css');
+    app.import('vendor/loading-slider.css');
   }
 };
