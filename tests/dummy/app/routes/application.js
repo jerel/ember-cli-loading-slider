@@ -15,7 +15,7 @@ export default Ember.Route.extend(LoadingSliderMixin, {
       this.controllerFor('application').setProperties({
         expanding: false,
         color: false,
-        speed: 1000,
+        speed: 1000
       });
 
       this.send('loading');
@@ -27,7 +27,7 @@ export default Ember.Route.extend(LoadingSliderMixin, {
       this.controllerFor('application').setProperties({
         expanding: true,
         color: ['#fcb851', '#e64053', '#55bcb6', '#77edb2'],
-        speed: 750,
+        speed: 750
       });
 
       this.send('loading');
@@ -39,7 +39,7 @@ export default Ember.Route.extend(LoadingSliderMixin, {
       this.send('loading');
       this.controllerFor('application').setProperties({
         expanding: true,
-        color: false,
+        color: false
       });
       Ember.run.later(this, function() {
         this.send('finished');
