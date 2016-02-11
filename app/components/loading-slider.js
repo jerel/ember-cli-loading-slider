@@ -16,6 +16,10 @@ export default Ember.Component.extend({
   }),
 
   manage() {
+    if ( ! this.$()) {
+      return;
+    }
+
     if (this.get('isLoading')) {
       if (this.get('expanding')) {
         this.expandingAnimate.call(this);
