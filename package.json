@@ -1,14 +1,14 @@
 {
   "name": "ember-cli-loading-slider",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "directories": {
     "doc": "doc",
     "test": "tests"
   },
   "scripts": {
-    "start": "ember server",
     "build": "ember build",
-    "test": "ember test"
+    "start": "ember server",
+    "test": "ember try:testall"
   },
   "repository": "https://github.com/jerel/ember-cli-loading-slider",
   "engines": {
@@ -18,7 +18,7 @@
   "license": "MIT",
   "devDependencies": {
     "broccoli-asset-rev": "^2.2.0",
-    "ember-cli": "1.13.13",
+    "ember-cli": "1.13.15",
     "ember-cli-app-version": "^1.0.0",
     "ember-cli-content-security-policy": "0.4.0",
     "ember-cli-dependency-checker": "^1.1.0",
