@@ -105,6 +105,10 @@ export default Ember.Component.extend({
         innerWidth = 0,
         outerWidth = outer.width(),
         stepWidth = Math.round(outerWidth / 50);
+    let ua = window.navigator.userAgent;
+    let ie10 = ua.indexOf("MSIE "),
+        ie11 = ua.indexOf('Trident/'),
+        ieEdge = ua.indexOf('Edge/');
 
     outer.append(inner);
 
@@ -116,10 +120,17 @@ export default Ember.Component.extend({
           outer.empty();
         }
       }
-      inner.css({
-        'margin-left': '-' + step / 2 + 'px',
-        'width': step
-      });
+      if (ie10 > 0 || ie11 > 0 || ieEdge > 0) {
+        inner.css({
+          'margin': '0 auto',
+          'width': step
+        });
+      } else {
+        inner.css({
+          'margin-left': '-' + step / 2 + 'px',
+          'width': step
+        });
+      }
     }, 10);
   },
 
