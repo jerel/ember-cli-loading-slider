@@ -11,8 +11,6 @@ export default Ember.Component.extend({
     this.set('expanding', this.getAttr('expanding'));
     this.set('speed', this.getAttr('speed'));
     this.set('color', this.getAttr('color'));
-
-    this.manage();
   }),
 
   manage() {
@@ -145,5 +143,7 @@ export default Ember.Component.extend({
     if (color) {
       this.$('span').css('background-color', color);
     }
+
+    this.manage();
   }
 });
