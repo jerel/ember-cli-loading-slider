@@ -1,8 +1,10 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
+  loadingSlider: Ember.inject.service(),
+
   beforeModel: function() {
-    this.controllerFor('application').setProperties({
+    this.get('loadingSlider').changeAttrs({
       color: 'orange',
       expanding: false
     });
