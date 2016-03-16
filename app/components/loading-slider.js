@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-const { Component, run, isBlank, inject } = Ember;
+const { Component, run, isBlank, inject, on } = Ember;
 
 export default Component.extend({
   tagName: 'div',
@@ -17,6 +17,18 @@ export default Component.extend({
       this.get('loadingSlider').on('changeAttrs', this, this._changeAttrs);
     });
   },
+
+  setAttrsThenManage: on('didReceiveAttrs', function() {
+    this.setProperties({
+      isLoading: this.getAttr('isLoading'),
+      duration: this.getAttr('duration'),
+      expanding: this.getAttr('expanding'),
+      speed: this.getAttr('speed'),
+      color: this.getAttr('color')
+    });
+
+    this.manage();
+  }),
 
   willDestroy() {
     run.once(this, function() {
