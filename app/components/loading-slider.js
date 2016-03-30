@@ -184,7 +184,7 @@ export default Component.extend({
     }
 
     if (this.get('runManageInitially')) {
-      this.manage();
+      this._startLoading();
     }
   }
 });
