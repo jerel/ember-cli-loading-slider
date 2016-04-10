@@ -45,6 +45,8 @@ You may also show or hide the animation at any time from any route or controller
       }
     }
 
+Make sure that you have explicitly defined an application controller e.g. `app/controllers/application.js` to avoid getting an `Assertion Failed` error.
+
 ## API
 
 * isLoading
