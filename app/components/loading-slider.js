@@ -1,22 +1,59 @@
 import Ember from 'ember';
 
-export default Ember.Component.extend({
+const { Component, run, isBlank, inject, on } = Ember;
+
+export default Component.extend({
   tagName: 'div',
   classNames: ['loading-slider'],
   classNameBindings: 'expanding',
 
-  initialize: Ember.on('didReceiveAttrs', function() {
-    this.set('isLoading', this.getAttr('isLoading'));
-    this.set('duration', this.getAttr('duration'));
-    this.set('expanding', this.getAttr('expanding'));
-    this.set('speed', this.getAttr('speed'));
-    this.set('color', this.getAttr('color'));
+  loadingSlider: inject.service(),
+
+  init() {
+    this._super(...arguments);
+    run.once(this, function() {
+      this.get('loadingSlider').on('startLoading', this, this._startLoading);
+      this.get('loadingSlider').on('endLoading', this, this._endLoading);
+      this.get('loadingSlider').on('changeAttrs', this, this._changeAttrs);
+    });
+  },
+
+  setAttrsThenManage: on('didReceiveAttrs', function() {
+    this.setProperties({
+      isLoading: this.getAttr('isLoading'),
+      duration: this.getAttr('duration'),
+      expanding: this.getAttr('expanding'),
+      speed: this.getAttr('speed'),
+      color: this.getAttr('color')
+    });
 
     this.manage();
   }),
 
+  willDestroy() {
+    run.once(this, function() {
+      this.get('loadingSlider').off('startLoading', this, this._startLoading);
+      this.get('loadingSlider').off('endLoading', this, this._endLoading);
+      this.get('loadingSlider').off('changeAttrs', this, this._changeAttrs);
+    });
+  },
+
+  _startLoading() {
+    this.set('isLoading', true);
+    this.manage();
+  },
+
+  _endLoading() {
+    this.set('isLoading', false);
+  },
+
+  _changeAttrs(attrs) {
+    this.setProperties(attrs);
+    this.manage();
+  },
+
   manage() {
-    if ( ! this.$()) {
+    if (isBlank(this.$())) {
       return;
     }
 
@@ -62,7 +99,7 @@ export default Ember.Component.extend({
       }
 
       if (innerWidth > outerWidth) {
-        Ember.run.later(function() {
+        run.later(function() {
           outer.empty();
           window.clearInterval(interval);
         }, 50);
@@ -144,6 +181,10 @@ export default Ember.Component.extend({
     var color = this.get('color');
     if (color) {
       this.$('span').css('background-color', color);
+    }
+
+    if (this.get('runManageInitially')) {
+      this._startLoading();
     }
   }
 });
