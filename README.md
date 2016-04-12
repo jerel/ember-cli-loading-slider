@@ -45,7 +45,10 @@ You may also show or hide the animation at any time from any route or controller
       }
     }
 
-Make sure that you have explicitly defined an application controller e.g. `app/controllers/application.js` to avoid getting an `Assertion Failed` error.
+For v1.2.x make sure that you have explicitly defined an application controller
+e.g. `app/controllers/application.js` to avoid getting an `Assertion Failed` error.
+
+v1.3.x is implemented as a service and controllers are no longer used.
 
 ## API
 
@@ -69,9 +72,19 @@ Make sure that you have explicitly defined an application controller e.g. `app/c
  * Set the speed of the expanding style animation. Defaults to `1000`. Only valid
    when `expanding` is true.
 
+## Service API
+
+For advanced usage you may interact directly with the service instead of or in
+addition to using the `loading-slider` component.
+
+* `startLoading`
+* `endLoading`
+* `changeAttrs(attrs)`
+
 ## Authors
 
 * [Jerel Unruh](http://twitter.com/jerelunruh/)
+* [Contributors](https://github.com/jerel/ember-cli-loading-slider/graphs/contributors)
 
 ## Legal
 
