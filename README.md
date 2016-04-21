@@ -16,6 +16,10 @@ Add the component to your application template:
 
     {{loading-slider duration=250}}
 
+If you want to use the default styles import them in your `app.css`
+
+    @import 'ember-cli-loading-slider/default'
+
 Create application route (if not present) and extend application route with `loading-slider` 
 [mixin](https://github.com/jerel/ember-cli-loading-slider/blob/master/app/mixins/loading-slider.js):
 

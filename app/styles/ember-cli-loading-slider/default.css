@@ -1,0 +1,22 @@
+.loading-slider {
+  position: fixed;
+  overflow: hidden;
+  top: 0;
+  left: 0;
+  height: 2px;
+  width: 100%;
+  z-index: 999;
+}
+
+.loading-slider.expanding {
+  text-align: center;
+}
+
+.loading-slider.expanding span {
+}
+
+.loading-slider span {
+  position: inherit;
+  height: 2px;
+  background-color: red;
+}
