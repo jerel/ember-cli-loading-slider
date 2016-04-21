@@ -8,52 +8,65 @@ A loading indicator component for EmberJS that animates across the top of the vi
 
 ## Installation
 
-`npm install ember-cli-loading-slider --save-dev`
+`ember install ember-cli-loading-slider`
 
 ## Usage
 
 Add the component to your application template:
 
-    {{loading-slider isLoading=loading duration=250}}
-
-Alternatively you may try the more complex mode. In this mode an array of colors
-is required `hexColorsArray: ['#000', '#fff']`:
-
-    {{loading-slider isLoading=loading expanding=true color=hexColorsArray}}
+    {{loading-slider duration=250}}
 
 Create application route (if not present) and extend application route with `loading-slider` 
 [mixin](https://github.com/jerel/ember-cli-loading-slider/blob/master/app/mixins/loading-slider.js):
 
     import Ember from 'ember';
-    import LoadingSliderMixin from '../mixins/loading-slider';
+    import LoadingSliderMixin from 'ember-loading-slider/mixins/loading-slider';
 
-    export default Ember.Route.extend(LoadingSliderMixin, { });
+    export default Ember.Route.extend(LoadingSliderMixin, {});
 
 The animation will now show when the user navigates between routes that
-return a promise (such as `this.store.find()`).
+return a promise (such as `this.store.find()`). This even works for nested routes. If you handle `loading` and `finished` events in your route, make sure to `return true` and let the event bubble to the application route.
 
-You may also show or hide the animation at any time from any route or controller:
+You may also show or hide the animation at any time from any route or controller or component actions:
+
+    ...
+    loadingSlider: Ember.inject.service(),
 
     actions: {
       saveUser: function(user) {
-        var self = this;
+        let loadingSlider = this.get('loadingSlider');
 
-        self.send('loading');
+        loadingSlider.startLoading();
         user.save().finally(function() {
-          self.send('finished');
+          loadingSlider.endLoading();
         });
       }
     }
+    ...
 
 For v1.2.x make sure that you have explicitly defined an application controller
 e.g. `app/controllers/application.js` to avoid getting an `Assertion Failed` error.
 
 v1.3.x is implemented as a service and controllers are no longer used.
 
-## API
+## Configuration
 
-* isLoading
- * A boolean property that the component observes to determine if it should display or hide.
+You can change the configuration for the loading slider through the service.
+
+  loadingSlider: Ember.inject.service(),
+
+  actions: {
+    doSomething() {
+      let loadingSlider = this.get('loadingSlider');
+
+      loadingSlider.changeAttrs({
+        expanding: false,
+        color: false,
+        speed: 1000
+      });
+    },
+  }
+
 * duration
  * An approximate duration of the event in milliseconds. Defaults to `300`.
    Once 75% of this specified duration passes (or if the animation reaches 66%
@@ -74,8 +87,6 @@ v1.3.x is implemented as a service and controllers are no longer used.
 
 ## Service API
 
-For advanced usage you may interact directly with the service instead of or in
-addition to using the `loading-slider` component.
 
 * `startLoading`
 * `endLoading`
