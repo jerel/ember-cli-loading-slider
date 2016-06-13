@@ -50,6 +50,22 @@ e.g. `app/controllers/application.js` to avoid getting an `Assertion Failed` err
 
 v1.3.x is implemented as a service and controllers are no longer used.
 
+
+## Enabling during initial app loading
+
+Normally, the loading slider would only appear for transitions that happen after the app has loaded. During initial app loading (including loading models), the slider is not visible.
+
+To enable the app slider during initial loading, do these extra steps:
+
+1. Do not return a promise from the `application` route's `model` hook. If you do, the `application.hbs` template will not render until the data is loaded, and the slider will appear only when it's no longer necessary. If you need to load data app-wise, create an intermediate route (e. g. `main`) with `{path: '/'}` between the application route and your other routes.
+2. Create an empty `loading.hbs` template. This will tell Ember not to postpone rendering of the `application.hbs` component.
+3. In the `application` route, set a `bubbleLoadingSlider` property to `true`. This will tell the loading slider's `ApplicationRouteMixin` not to suppress the `loading` event.
+4. In the application template, pass the following arguments to the `loading-slider` component:
+    * `runManageInitially` - `true`. It tells the slider to start sliding when it initializes.
+    * `expanding` - `true`. Current sliding (`expanding: false`) implementation lets the slider disappear before the routes finish loading models. We don't want it do disappear prematurely.
+    * `color` - an array of at least two colors. It is required by `expanding: true`. To pass an array, create a simple helper or redefine the `loading-slider` component.
+
+
 ## API
 
 * isLoading
