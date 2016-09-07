@@ -125,6 +125,9 @@ export default Component.extend({
 
     if ('object' === typeof colorQueue) {
       (function updateFn() {
+        if (self.isDestroyed || self.isDestroying) {
+          return;
+        }
         let color = colorQueue.shift();
         colorQueue.push(color);
         self.expandItem.call(self, color);
