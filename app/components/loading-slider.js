@@ -11,6 +11,9 @@ export default Component.extend({
 
   init() {
     this._super(...arguments);
+
+    if (isFastBoot()) { return; }
+
     run.once(this, function() {
       this.get('loadingSlider').on('startLoading', this, this._startLoading);
       this.get('loadingSlider').on('endLoading', this, this._endLoading);
@@ -19,6 +22,9 @@ export default Component.extend({
   },
 
   setAttrsThenManage: on('didReceiveAttrs', function() {
+
+    if (isFastBoot()) { return; }
+
     this.setProperties({
       isLoading: this.getAttr('isLoading'),
       duration: this.getAttr('duration'),
@@ -191,3 +197,7 @@ export default Component.extend({
     }
   }
 });
+
+function isFastBoot() {
+  return typeof FastBoot !== 'undefined';
+}
