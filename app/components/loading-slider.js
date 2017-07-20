@@ -6,6 +6,7 @@ export default Component.extend({
   tagName: 'div',
   classNames: ['loading-slider'],
   classNameBindings: 'expanding',
+  progressBarClass: null,
 
   loadingSlider: inject.service(),
 
@@ -78,7 +79,7 @@ export default Component.extend({
     this.set('isLoaded', false);
     let self = this,
         elapsedTime = 0,
-        inner = $('<span class="loading-slider__progress">'),
+        inner = $(`<span class="loading-slider__progress ${this.get('progressBarClass')}">`),
         outer = this.$(),
         duration = this.getWithDefault('duration', 300),
         innerWidth = 0,
