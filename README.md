@@ -52,25 +52,25 @@ v1.3.x is implemented as a service and controllers are no longer used.
 
 ## API
 
-* isLoading
- * A boolean property that the component observes to determine if it should display or hide.
-* duration
- * An approximate duration of the event in milliseconds. Defaults to `300`.
-   Once 75% of this specified duration passes (or if the animation reaches 66%
-   of the viewport width the animation slows until either isLoaded changes to
-   false or it reaches 100% of the viewport width. This option is only valid for the
-   simple stripe animation.
-* color
- * A css color to use for the animation stripe. Defaults to `red`. Can also be
-   set with your application's css by setting the background-color of
-   .loading-slider > span. If `expanding` is set to `true` then `color` is required
-   and must be an array of colors.
-* expanding
- * Set this to `true` to change the style of animation from a simple stripe
-   to a more complex animation (see the demo).
-* speed
- * Set the speed of the expanding style animation. Defaults to `1000`. Only valid
-   when `expanding` is true.
+* `isLoading`
+  * A boolean property that the component observes to determine if it should display or hide.
+* `duration`
+  * An approximate duration of the event in milliseconds. Defaults to `300`.
+    Once 75% of this specified duration passes (or if the animation reaches 66%
+    of the viewport width the animation slows until either `isLoaded` changes to
+    `false` or it reaches 100% of the viewport width. This option is only valid for the
+    simple stripe animation.
+* `color`
+  * A css color to use for the animation stripe. Defaults to `red`. Can also be
+    set with your application's css by setting the background-color of
+    .loading-slider > span. If `expanding` is set to `true` then `color` is required
+    and must be an array of colors.
+* `expanding`
+  * Set this to `true` to change the style of animation from a simple stripe
+    to a more complex animation (see the demo).
+* `speed`
+  * Set the speed of the expanding style animation. Defaults to `1000`. Only valid
+    when `expanding` is true.
 
 ## Service API
 
