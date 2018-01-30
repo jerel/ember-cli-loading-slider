@@ -1,6 +1,8 @@
-import Ember from 'ember';
-
-const { Component, run, isBlank, inject, on } = Ember;
+import { inject as service } from '@ember/service';
+import Component from '@ember/component';
+import { run } from '@ember/runloop';
+import { isBlank } from '@ember/utils';
+import { on } from '@ember/object/evented';
 
 export default Component.extend({
   tagName: 'div',
@@ -8,7 +10,7 @@ export default Component.extend({
   classNameBindings: 'expanding',
   progressBarClass: null,
 
-  loadingSlider: inject.service(),
+  loadingSlider: service(),
 
   init() {
     this._super(...arguments);

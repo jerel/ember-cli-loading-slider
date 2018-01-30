@@ -1,7 +1,8 @@
+import { run, later } from '@ember/runloop';
 import { test } from 'qunit';
-import Ember from 'ember';
 import moduleForAcceptance from '../../tests/helpers/module-for-acceptance';
 import startApp from '../../tests/helpers/start-app';
+import $ from 'jquery';
 
 let application;
 
@@ -11,7 +12,7 @@ moduleForAcceptance('Acceptance | Main', {
   },
 
   afterEach: function() {
-    Ember.run(application, 'destroy');
+    run(application, 'destroy');
   }
 });
 
@@ -34,11 +35,11 @@ test('testing animation', function(assert) {
     // use the jQuery click rather than the promise observing click
     find('button:first').click();
 
-    Ember.run.later(() => {
+    later(() => {
       assert.equal($('.loading-slider span:last').width() > 0, true, 'The slider has animated');
     }, 500);
 
-    Ember.run.later(() => {
+    later(() => {
       assert.equal($('.loading-slider span').length === 0, true, 'The slider has reset');
     }, 1500);
   });
@@ -53,15 +54,15 @@ test('testing multi-color centered animation', function(assert) {
     // use the jQuery click rather than the promise observing click
     find('button:nth-of-type(3)').click();
 
-    Ember.run.later(() => {
+    later(() => {
       assert.equal(find('.loading-slider span:last').width() > 0, true, 'The slider has animated');
     }, 1000);
 
-    Ember.run.later(() => {
+    later(() => {
       assert.equal(find('.loading-slider span').length > 2, true, 'There are multiple sliders');
     }, 1500);
 
-    Ember.run.later(() => {
+    later(() => {
       assert.equal(find('.loading-slider span').length === 0, true, 'The slider has reset');
     }, 5500);
   });
