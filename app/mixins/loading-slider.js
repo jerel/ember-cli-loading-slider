@@ -1,9 +1,9 @@
-import Ember from 'ember';
-
-const { Mixin, inject, isPresent } = Ember;
+import { inject as service } from '@ember/service';
+import Mixin from '@ember/object/mixin';
+import { isPresent } from '@ember/utils';
 
 export default Mixin.create({
-  loadingSlider: inject.service(),
+  loadingSlider: service(),
 
   actions: {
     loading() {

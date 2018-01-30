@@ -1,12 +1,15 @@
+import { later } from '@ember/runloop';
+import { inject as service } from '@ember/service';
+import Route from '@ember/routing/route';
 import Ember from 'ember';
 import LoadingSliderMixin from '../mixins/loading-slider';
 
-export default Ember.Route.extend(LoadingSliderMixin, {
-  loadingSlider: Ember.inject.service(),
+export default Route.extend(LoadingSliderMixin, {
+  loadingSlider: service(),
 
   model: function(params, transition) {
     if ( ! Ember.testing) {
-      Ember.run.later(this, function() {
+      later(this, function() {
         transition.send('showMultiExpandingAnimation');
       }, 100);
     }
@@ -22,7 +25,7 @@ export default Ember.Route.extend(LoadingSliderMixin, {
       });
 
       this.send('loading');
-      Ember.run.later(this, function() {
+      later(this, function() {
         this.send('finished');
       }, 1000);
     },
@@ -34,7 +37,7 @@ export default Ember.Route.extend(LoadingSliderMixin, {
       });
 
       this.send('loading');
-      Ember.run.later(this, function() {
+      later(this, function() {
         this.send('finished');
       }, 5000);
     },
@@ -44,7 +47,7 @@ export default Ember.Route.extend(LoadingSliderMixin, {
         expanding: true,
         color: false
       });
-      Ember.run.later(this, function() {
+      later(this, function() {
         this.send('finished');
       }, 1000);
     }
