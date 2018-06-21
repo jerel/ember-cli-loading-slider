@@ -1,70 +1,53 @@
-import { test } from 'qunit';
-import Ember from 'ember';
-import moduleForAcceptance from '../../tests/helpers/module-for-acceptance';
-import startApp from '../../tests/helpers/start-app';
+import { later } from '@ember/runloop';
+import { module, test } from 'qunit';
+import { setupApplicationTest } from 'ember-qunit';
+import { visit, find, findAll } from '@ember/test-helpers';
 
-let application;
+module('Acceptance | Main', function(hooks) {
+  setupApplicationTest(hooks);
 
-moduleForAcceptance('Acceptance | Main', {
-  beforeEach: function() {
-    application = startApp();
-  },
+  test('visiting /75', async function(assert) {
+    await visit('/75');
 
-  afterEach: function() {
-    Ember.run(application, 'destroy');
-  }
-});
-
-test('visiting /75', function(assert) {
-  visit('/75');
-
-  andThen(() => {
-    assert.equal(find('.loading-slider').length, 1, "The component's element exists");
-    assert.equal(find('.loading-slider span').length, 1, 'The component has inserted one span');
-    assert.equal(find('.loading-slider span').width(), 0, 'The stripe has finished animating and is width 0');
+    assert.equal(await findAll('.loading-slider').length, 1, "The component's element exists");
+    assert.equal(await findAll('.loading-slider span').length, 1, 'The component has inserted one span');
+    assert.equal(await find('.loading-slider span').clientWidth, 0, 'The stripe has finished animating and is width 0');
   });
-});
 
-test('testing animation', function(assert) {
-  assert.expect(2);
+  test('testing animation', async function(assert) {
+    assert.expect(2);
 
-  visit('/');
+    await visit('/');
 
-  andThen(() => {
     // use the jQuery click rather than the promise observing click
-    find('button:first').click();
+    await findAll('button')[1].click();
 
-    Ember.run.later(() => {
-      assert.equal($('.loading-slider span:last').width() > 0, true, 'The slider has animated');
+    later(async () => {
+      assert.equal(await findAll('.loading-slider span')[1].clientWidth > 0, true, 'The slider has animated');
     }, 500);
 
-    Ember.run.later(() => {
-      assert.equal($('.loading-slider span').length === 0, true, 'The slider has reset');
+    later(async () => {
+      assert.equal(await findAll('.loading-slider span').length === 0, true, 'The slider has reset');
     }, 1500);
   });
 
-});
-
-test('testing multi-color centered animation', function(assert) {
-  visit('/');
-
-  andThen(() => {
+  test('testing multi-color centered animation', async function(assert) {
+    await visit('/');
 
     // use the jQuery click rather than the promise observing click
-    find('button:nth-of-type(3)').click();
+    await findAll('button')[2].click();
 
-    Ember.run.later(() => {
-      assert.equal(find('.loading-slider span:last').width() > 0, true, 'The slider has animated');
+    later(async () => {
+      assert.equal(await findAll('.loading-slider span')[1].clientWidth > 0, true, 'The slider has animated');
     }, 1000);
 
-    Ember.run.later(() => {
-      assert.equal(find('.loading-slider span').length > 2, true, 'There are multiple sliders');
+    later(() => {
+      assert.equal(findAll('.loading-slider span').length > 2, true, 'There are multiple sliders');
     }, 1500);
 
-    Ember.run.later(() => {
-      assert.equal(find('.loading-slider span').length === 0, true, 'The slider has reset');
+    later(() => {
+      assert.equal(findAll('.loading-slider span').length === 0, true, 'The slider has reset');
     }, 5500);
   });
-
 });
 
