@@ -1,16 +1,16 @@
-import Ember from 'ember';
-
-const { Mixin, inject, isPresent } = Ember;
+import { inject as service } from '@ember/service';
+import Mixin from '@ember/object/mixin';
+import { isPresent } from '@ember/utils';
 
 export default Mixin.create({
-  loadingSlider: inject.service(),
+  loadingSlider: service(),
 
   actions: {
     loading() {
       let loadingSliderService = this.get('loadingSlider');
       loadingSliderService.startLoading();
-      if (isPresent(this.router)) {
-        this.router.one('didTransition', function() {
+      if (isPresent(this._router)) {
+        this._router.one('didTransition', function() {
           loadingSliderService.endLoading();
         });
       }

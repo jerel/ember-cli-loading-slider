@@ -1,6 +1,8 @@
-import Ember from 'ember';
-
-const { Component, run, isBlank, inject, on } = Ember;
+import { inject as service } from '@ember/service';
+import Component from '@ember/component';
+import { run } from '@ember/runloop';
+import { isBlank } from '@ember/utils';
+import $ from 'jquery';
 
 export default Component.extend({
   tagName: 'div',
@@ -8,7 +10,7 @@ export default Component.extend({
   classNameBindings: 'expanding',
   progressBarClass: null,
 
-  loadingSlider: inject.service(),
+  loadingSlider: service(),
 
   init() {
     this._super(...arguments);
@@ -22,7 +24,8 @@ export default Component.extend({
     });
   },
 
-  setAttrsThenManage: on('didReceiveAttrs', function() {
+  didReceiveAttrs() {
+    this._super(...arguments);
 
     if (isFastBoot()) { return; }
 
@@ -35,7 +38,7 @@ export default Component.extend({
     });
 
     this.manage();
-  }),
+  },
 
   willDestroy() {
     run.once(this, function() {
@@ -150,8 +153,7 @@ export default Component.extend({
   },
 
   expandItem(color, cleanUp) {
-    let self = this,
-        inner = $('<span>').css({'background-color': color}),
+    let inner = $('<span>').css({'background-color': color}),
         outer = this.$(),
         innerWidth = 0,
         outerWidth = outer.width(),
