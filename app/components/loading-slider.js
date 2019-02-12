@@ -45,6 +45,7 @@ export default Component.extend({
       this.get('loadingSlider').off('startLoading', this, this._startLoading);
       this.get('loadingSlider').off('endLoading', this, this._endLoading);
       this.get('loadingSlider').off('changeAttrs', this, this._changeAttrs);
+      run.cancel(this.get('_clearLater'));
     });
   },
 
@@ -109,10 +110,12 @@ export default Component.extend({
       }
 
       if (innerWidth > outerWidth) {
-        run.later(function() {
-          outer.empty();
-          window.clearInterval(interval);
-        }, 50);
+        if (!self.get('isDestroyed') && !self.get('isDestroying')) {
+          self.set('_clearLater', run.later(function() {
+            outer.empty();
+            window.clearInterval(interval);
+          }, 50));
+        }
       }
 
       // the activity has finished
