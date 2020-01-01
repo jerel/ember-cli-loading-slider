@@ -9,9 +9,9 @@ module('Acceptance | Main', function(hooks) {
   test('visiting /75', async function(assert) {
     await visit('/75');
 
-    assert.equal(await findAll('.loading-slider').length, 1, "The component's element exists");
-    assert.equal(await findAll('.loading-slider span').length, 1, 'The component has inserted one span');
-    assert.equal(await find('.loading-slider span').clientWidth, 0, 'The stripe has finished animating and is width 0');
+    assert.equal(findAll('.loading-slider').length, 1, "The component's element exists");
+    assert.equal(findAll('.loading-slider span').length, 1, 'The component has inserted one span');
+    assert.equal(find('.loading-slider span').clientWidth, 0, 'The stripe has finished animating and is width 0');
   });
 
   test('testing animation', async function(assert) {
@@ -22,12 +22,12 @@ module('Acceptance | Main', function(hooks) {
     // use the jQuery click rather than the promise observing click
     await findAll('button')[1].click();
 
-    later(async () => {
-      assert.equal(await findAll('.loading-slider span')[1].clientWidth > 0, true, 'The slider has animated');
-    }, 500);
+    later(() => {
+      assert.equal(findAll('.loading-slider span')[1].clientWidth > 0, true, 'The slider has animated');
+    }, 250);
 
-    later(async () => {
-      assert.equal(await findAll('.loading-slider span').length === 0, true, 'The slider has reset');
+    later(() => {
+      assert.equal(findAll('.loading-slider span').length === 0, true, 'The slider has reset');
     }, 1500);
   });
 
@@ -37,8 +37,8 @@ module('Acceptance | Main', function(hooks) {
     // use the jQuery click rather than the promise observing click
     await findAll('button')[2].click();
 
-    later(async () => {
-      assert.equal(await findAll('.loading-slider span')[1].clientWidth > 0, true, 'The slider has animated');
+    later(() => {
+      assert.equal(findAll('.loading-slider span')[1].clientWidth > 0, true, 'The slider has animated');
     }, 1000);
 
     later(() => {
