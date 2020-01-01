@@ -2,7 +2,6 @@ import { inject as service } from '@ember/service';
 import Component from '@ember/component';
 import { run } from '@ember/runloop';
 import { isBlank } from '@ember/utils';
-import $ from 'jquery';
 
 export default Component.extend({
   tagName: 'div',
@@ -63,7 +62,7 @@ export default Component.extend({
   },
 
   manage() {
-    if (isBlank(this.$())) {
+    if (isBlank(this.element)) {
       return;
     }
 
@@ -82,22 +81,25 @@ export default Component.extend({
     this.set('isLoaded', false);
     let self = this,
         elapsedTime = 0,
-        inner = $(`<span class="loading-slider__progress ${this.get('progressBarClass')}">`),
-        outer = this.$(),
+        inner = document.createElement('span'),
+        outer = this.element,
         duration = this.getWithDefault('duration', 300),
         innerWidth = 0,
-        outerWidth = this.$().width(),
+        outerWidth = this.element.clientWidth,
         stepWidth = Math.round(outerWidth / 50),
         color = this.get('color');
+    
+    inner.setAttribute('class', `loading-slider__progress ${this.get('progressBarClass')}`);
+    outer.appendChild(inner);
 
-    outer.append(inner);
     if (color) {
-      inner.css('background-color', color);
+      inner.style.backgroundColor = color;
     }
 
     let interval = window.setInterval(function() {
       elapsedTime = elapsedTime + 10;
-      inner.width(innerWidth = innerWidth + stepWidth);
+      inner.style.width = `${innerWidth}px`;
+      innerWidth = innerWidth + stepWidth;
 
       // slow the animation if we used more than 75% the estimated duration
       // or 66% of the animation width
@@ -109,8 +111,8 @@ export default Component.extend({
       }
 
       if (innerWidth > outerWidth) {
-        run.later(function() {
-          outer.empty();
+        run.later(this, function() {
+          self._removeNodes(outer);
           window.clearInterval(interval);
         }, 50);
       }
@@ -129,7 +131,7 @@ export default Component.extend({
 
   expandingAnimate() {
     let self = this,
-        outer = this.$(),
+        outer = this.element,
         speed = this.getWithDefault('speed', 1000),
         colorQueue = this.get('color');
 
@@ -142,7 +144,7 @@ export default Component.extend({
         colorQueue.push(color);
         self.expandItem.call(self, color);
         if ( ! self.get('isLoading')) {
-          outer.empty();
+          self._removeNodes(outer);
         } else {
           window.setTimeout(updateFn, speed);
         }
@@ -153,50 +155,56 @@ export default Component.extend({
   },
 
   expandItem(color, cleanUp) {
-    let inner = $('<span>').css({'background-color': color}),
-        outer = this.$(),
+    let inner = document.createElement('span'),
+        outer = this.element,
         innerWidth = 0,
-        outerWidth = outer.width(),
+        outerWidth = outer.clientWidth,
         stepWidth = Math.round(outerWidth / 50);
     let ua = window.navigator.userAgent;
     let ie10 = ua.indexOf("MSIE "),
         ie11 = ua.indexOf('Trident/'),
         ieEdge = ua.indexOf('Edge/');
+    let self = this;
 
-    outer.append(inner);
+    inner.style.backgroundColor = color;
+    outer.appendChild(inner);
 
     let interval = window.setInterval(function() {
       let step = (innerWidth = innerWidth + stepWidth);
       if (innerWidth > outerWidth) {
         window.clearInterval(interval);
         if (cleanUp) {
-          outer.empty();
+          self._removeNodes(outer);
         }
       }
       if (ie10 > 0 || ie11 > 0 || ieEdge > 0) {
-        inner.css({
-          'margin': '0 auto',
-          'width': step
-        });
+        inner.style.margin = '0 auto';
+        inner.style.width = `${step}px`;
       } else {
-        inner.css({
-          'margin-left': '-' + step / 2 + 'px',
-          'width': step
-        });
+        inner.style.marginLeft = `-${step / 2}px`;
+        inner.style.width = `${step}px`;
       }
     }, 10);
   },
 
   didInsertElement() {
-    this.$().html('<span>');
-
-    var color = this.get('color');
+    let innerSpan = document.createElement('span');
+    
+    let color = this.get('color');
     if (color) {
-      this.$('span').css('background-color', color);
+      innerSpan.style.backgroundColor = color;
     }
+
+    this.element.appendChild(innerSpan);
 
     if (this.get('runManageInitially')) {
       this._startLoading();
+    }
+  },
+
+  _removeNodes(element) {
+    while (element.lastChild) {
+      element.removeChild(element.lastChild);
     }
   }
 });
